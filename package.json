@@ -1,0 +1,19 @@
+{
+  "name": "bar-bending-schedule",
+  "version": "1.0.0",
+  "description": "Bar Bending Schedule (BBS) Management Software",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "cd backend && npm start",
+    "client": "cd frontend && npm start",
+    "build": "cd frontend && npm run build",
+    "install-all": "npm install && cd backend && npm install && cd ../frontend && npm install"
+  },
+  "keywords": ["BBS", "Bar Bending Schedule", "Construction"],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
