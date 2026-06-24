@@ -14,7 +14,7 @@ function ScheduleList({ projectId }) {
     remarks: ''
   });
 
-  const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+  const API_URL = process.env.REACT_APP_API_URL || 'https://bbs-software-w9co.vercel.app/api';
 
   useEffect(() => {
     const fetchSchedules = async () => {
@@ -25,7 +25,7 @@ function ScheduleList({ projectId }) {
 
       setLoading(true);
       try {
-        const response = await fetch(`${API_URL}/api/schedules/project/${projectId}`);
+        const response = await fetch(`${API_URL}/schedules/project/${projectId}`);
         const data = await response.json();
         setSchedules(data);
       } catch (error) {
@@ -65,7 +65,7 @@ function ScheduleList({ projectId }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`${API_URL}/api/schedules`, {
+      const response = await fetch(`${API_URL}/schedules`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

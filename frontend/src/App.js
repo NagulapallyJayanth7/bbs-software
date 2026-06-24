@@ -8,14 +8,14 @@ function App() {
   const [selectedProject, setSelectedProject] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+  const API_URL = process.env.REACT_APP_API_URL || 'https://bbs-software-w9co.vercel.app/api';
 
   // Fetch all projects
   useEffect(() => {
     const fetchProjects = async () => {
       setLoading(true);
       try {
-        const response = await fetch(`${API_URL}/api/projects`);
+        const response = await fetch(`${API_URL}/projects`);
         const data = await response.json();
         setProjects(data);
       } catch (error) {

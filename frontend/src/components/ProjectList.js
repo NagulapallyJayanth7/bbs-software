@@ -1,12 +1,12 @@
 import ScheduleList from './ScheduleList';
 
 function ProjectList({ projects, selectedProject, onSelectProject, onProjectDeleted }) {
-  const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+  const API_URL = process.env.REACT_APP_API_URL || 'https://bbs-software-w9co.vercel.app/api';
 
   const handleDeleteProject = async (projectId) => {
     if (window.confirm('Are you sure you want to delete this project?')) {
       try {
-        const response = await fetch(`${API_URL}/api/projects/${projectId}`, {
+        const response = await fetch(`${API_URL}/projects/${projectId}`, {
           method: 'DELETE'
         });
         
