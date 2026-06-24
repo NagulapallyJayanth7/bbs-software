@@ -12,20 +12,20 @@ function App() {
 
   // Fetch all projects
   useEffect(() => {
-    fetchProjects();
-  }, []);
+    const fetchProjects = async () => {
+      setLoading(true);
+      try {
+        const response = await fetch(`${API_URL}/api/projects`);
+        const data = await response.json();
+        setProjects(data);
+      } catch (error) {
+        console.error('Error fetching projects:', error);
+      }
+      setLoading(false);
+    };
 
-  const fetchProjects = async () => {
-    setLoading(true);
-    try {
-      const response = await fetch(`${API_URL}/api/projects`);
-      const data = await response.json();
-      setProjects(data);
-    } catch (error) {
-      console.error('Error fetching projects:', error);
-    }
-    setLoading(false);
-  };
+    fetchProjects();
+  }, [API_URL]);
 
   const handleProjectAdded = (newProject) => {
     setProjects([newProject, ...projects]);

@@ -17,20 +17,25 @@ function ScheduleList({ projectId }) {
   const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
 
   useEffect(() => {
-    if (projectId) fetchSchedules();
-  }, [projectId]);
+    const fetchSchedules = async () => {
+      if (!projectId) {
+        setSchedules([]);
+        return;
+      }
 
-  const fetchSchedules = async () => {
-    setLoading(true);
-    try {
-      const response = await fetch(`${API_URL}/api/schedules/project/${projectId}`);
-      const data = await response.json();
-      setSchedules(data);
-    } catch (error) {
-      console.error('Error fetching schedules:', error);
-    }
-    setLoading(false);
-  };
+      setLoading(true);
+      try {
+        const response = await fetch(`${API_URL}/api/schedules/project/${projectId}`);
+        const data = await response.json();
+        setSchedules(data);
+      } catch (error) {
+        console.error('Error fetching schedules:', error);
+      }
+      setLoading(false);
+    };
+
+    fetchSchedules();
+  }, [API_URL, projectId]);
 
   const calculateWeight = (diameter, lengthVal, unitVal) => {
     const diameterNum = parseFloat(diameter);

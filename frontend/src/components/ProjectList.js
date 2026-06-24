@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import ScheduleList from './ScheduleList';
 
 function ProjectList({ projects, selectedProject, onSelectProject, onProjectDeleted }) {
