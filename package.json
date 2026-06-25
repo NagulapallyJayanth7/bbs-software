@@ -10,10 +10,18 @@
     "build": "cd frontend && npm run build",
     "install-all": "npm install && cd backend && npm install && cd ../frontend && npm install"
   },
-  "keywords": ["BBS", "Bar Bending Schedule", "Construction"],
+  "keywords": [
+    "BBS",
+    "Bar Bending Schedule",
+    "Construction"
+  ],
   "author": "",
   "license": "MIT",
   "devDependencies": {
     "concurrently": "^8.2.2"
+  },
+  "dependencies": {
+    "exceljs": "^4.4.0",
+    "file-saver": "^2.0.5"
   }
 }

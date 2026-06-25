@@ -108,7 +108,7 @@ function ScheduleList({ projectId }) {
   const handleDeleteSchedule = async (scheduleId) => {
     if (window.confirm('Delete this schedule?')) {
       try {
-        const response = await fetch(`${API_URL}/api/schedules/${scheduleId}`, {
+        const response = await fetch(`${API_URL}/schedules/${scheduleId}`, {
           method: 'DELETE'
         });
 
