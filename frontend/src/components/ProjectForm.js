@@ -10,6 +10,8 @@ function ProjectForm({ onProjectAdded }) {
 
   const API_URL = process.env.REACT_APP_API_URL || 'https://bbs-software-w9co.vercel.app/api';
 
+  console.log('ProjectForm API_URL:', API_URL);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
@@ -21,14 +23,18 @@ function ProjectForm({ onProjectAdded }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    console.log('Submitting project', { apiUrl: API_URL, formData });
     try {
+      const requestBody = JSON.stringify(formData);
+      console.log('Project request body', requestBody);
       const response = await fetch(`${API_URL}/projects`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(formData)
+        body: requestBody
       });
+      console.log('Project response status', response.status, response.statusText);
       
       if (response.ok) {
         const newProject = await response.json();
@@ -36,7 +42,9 @@ function ProjectForm({ onProjectAdded }) {
         setFormData({ name: '', description: '', location: '' });
         alert('Project created successfully!');
       } else {
-        alert('Error creating project');
+        const errorText = await response.text();
+        console.error('Project creation failed', response.status, response.statusText, errorText);
+        alert(`Error creating project: ${response.status} ${response.statusText}`);
       }
     } catch (error) {
       console.error('Error:', error);

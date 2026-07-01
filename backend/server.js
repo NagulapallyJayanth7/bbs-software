@@ -9,8 +9,26 @@ const port = process.env.PORT || 5000;
 
 // Middleware
 app.use(cors());
-app.use(bodyParser.json());
+app.use(bodyParser.json({
+  verify: (req, res, buf) => {
+    req.rawBody = buf.toString();
+  }
+}));
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.originalUrl} content-type=${req.headers['content-type']}`);
+  next();
+});
+
+app.use((err, req, res, next) => {
+  if (err instanceof SyntaxError && err.status === 400 && 'body' in err) {
+    console.error('Invalid JSON payload:', err.message);
+    console.error('Raw request body:', req.rawBody);
+    return res.status(400).json({ error: 'Invalid JSON payload' });
+  }
+  next(err);
+});
 
 // PostgreSQL Connection Pool is provided by ./db
 
@@ -50,6 +68,7 @@ async function initializeDatabase() {
     `);
 
     await client.query('ALTER TABLE schedules ADD COLUMN IF NOT EXISTS weight NUMERIC(10,2);');
+    await client.query('ALTER TABLE schedules ADD COLUMN IF NOT EXISTS consumed_weight NUMERIC(10,2) DEFAULT 0;');
 
     await client.query(`
       CREATE TABLE IF NOT EXISTS schedule_details (
